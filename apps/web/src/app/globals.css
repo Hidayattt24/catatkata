@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --color-eager-green: #58cc02;
+  --color-storybook-green: #d7ffb8;
+  --color-spark-blue: #1cb0f6;
+  --color-fresh-leaf: #a5ed6e;
+  --color-night-ink: #000437;
+  --color-paper-white: #ffffff;
+  --color-charcoal: #4b4b4b;
+  --color-pencil-gray: #777777;
+  --color-faded-gray: #afafaf;
+  --color-border-gray: #e5e5e5;
+}
+
+@theme inline {
+  --color-eager-green: var(--color-eager-green);
+  --color-storybook-green: var(--color-storybook-green);
+  --color-spark-blue: var(--color-spark-blue);
+  --color-fresh-leaf: var(--color-fresh-leaf);
+  --color-night-ink: var(--color-night-ink);
+  --color-paper-white: var(--color-paper-white);
+  --color-charcoal: var(--color-charcoal);
+  --color-pencil-gray: var(--color-pencil-gray);
+  --color-faded-gray: var(--color-faded-gray);
+  --color-border-gray: var(--color-border-gray);
+
+  --font-sans: var(--font-duolingo-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-feather: var(--font-feather), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #4b4b4b;
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

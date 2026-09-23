@@ -1,26 +1,21 @@
 {
-  "name": "catatkata",
-  "version": "0.1.0",
+  "name": "catatkata-monorepo",
   "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "concurrently -n \"web,api\" -c \"cyan.bold,green.bold\" \"npm run dev:web\" \"npm run dev:api\"",
+    "dev:web": "npm run dev --workspace=apps/web",
+    "dev:api": "cd apps/api && go run ./cmd/server",
+    "build:web": "npm run build --workspace=apps/web",
+    "build:api": "cd apps/api && go build -o bin/server ./cmd/server",
+    "lint:web": "npm run lint --workspace=apps/web"
   },
   "dependencies": {
-    "next": "16.3.5",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "@supabase/supabase-js": "^2.117.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.3.5",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "concurrently": "^10.0.5"
   }
 }
