@@ -19,6 +19,15 @@ export function getSupabaseAnonKey(): string {
   );
 }
 
+export function getAuthRedirectUrl(): string {
+  if (typeof window !== "undefined") {
+    return `${window.location.origin}/`;
+  }
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://catatkata-web.vercel.app/";
+  const formatted = siteUrl.startsWith("http") ? siteUrl : `https://${siteUrl}`;
+  return formatted.endsWith("/") ? formatted : `${formatted}/`;
+}
+
 export const supabase = createClient(getSupabaseUrl(), getSupabaseAnonKey());
 
 export function getSupabaseServerClient(accessToken?: string) {
