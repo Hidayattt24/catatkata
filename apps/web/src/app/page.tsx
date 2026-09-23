@@ -14,7 +14,7 @@ import { VocabularyForm } from "@/components/organisms/VocabularyForm";
 import { VocabularyDetail } from "@/components/organisms/VocabularyDetail";
 import { ConfirmDialog } from "@/components/molecules/ConfirmDialog";
 import { EmptyState } from "@/components/molecules/EmptyState";
-import { getSupabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import * as api from "@/services/api";
 
 export default function Home() {
@@ -33,48 +33,37 @@ export default function Home() {
 
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
-  // Initialize Supabase Auth Session listener & fetch config dynamically from Go API
+  // Initialize Supabase Auth Session listener
   useEffect(() => {
-    let subscription: { unsubscribe: () => void } | null = null;
-
-    getSupabase().then((client) => {
-      if (!client) {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        setIsAuthenticated(true);
+        setUserEmail(session.user.email || "learner@catatkata.app");
+        setAccessToken(session.access_token);
+      } else {
         setIsAuthenticated(false);
-        setIsLoadingAuth(false);
-        return;
       }
-
-      client.auth.getSession().then(({ data: { session } }) => {
-        if (session) {
-          setIsAuthenticated(true);
-          setUserEmail(session.user.email || "learner@catatkata.app");
-          setAccessToken(session.access_token);
-        } else {
-          setIsAuthenticated(false);
-        }
-        setIsLoadingAuth(false);
-      });
-
-      const { data } = client.auth.onAuthStateChange((_event, session) => {
-        if (session) {
-          setIsAuthenticated(true);
-          setUserEmail(session.user.email || "learner@catatkata.app");
-          setAccessToken(session.access_token);
-        } else {
-          setIsAuthenticated(false);
-          setAccessToken(null);
-        }
-        setIsLoadingAuth(false);
-      });
-      subscription = data.subscription;
+      setIsLoadingAuth(false);
     });
 
-    return () => {
-      if (subscription) subscription.unsubscribe();
-    };
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        setIsAuthenticated(true);
+        setUserEmail(session.user.email || "learner@catatkata.app");
+        setAccessToken(session.access_token);
+      } else {
+        setIsAuthenticated(false);
+        setAccessToken(null);
+      }
+      setIsLoadingAuth(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
-  // Fetch list real-time from Go Backend API when token or filter changes
+  // Fetch list real-time from API Routes when token or filter changes
   useEffect(() => {
     if (accessToken) {
       api
@@ -126,19 +115,13 @@ export default function Home() {
 
   const handleLoginWithGoogle = async () => {
     try {
-      const client = await getSupabase();
-      if (client) {
-        const { error } = await client.auth.signInWithOAuth({
-          provider: "google",
-          options: {
-            redirectTo: typeof window !== "undefined" ? window.location.origin : "",
-          },
-        });
-        if (error) {
-          setIsAuthenticated(true);
-          setUserEmail("learner@catatkata.app");
-        }
-      } else {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: typeof window !== "undefined" ? window.location.origin : "",
+        },
+      });
+      if (error) {
         setIsAuthenticated(true);
         setUserEmail("learner@catatkata.app");
       }
@@ -149,10 +132,7 @@ export default function Home() {
   };
 
   const handleLogout = async () => {
-    const client = await getSupabase();
-    if (client) {
-      await client.auth.signOut();
-    }
+    await supabase.auth.signOut();
     setIsAuthenticated(false);
     setAccessToken(null);
   };

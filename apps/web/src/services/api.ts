@@ -6,18 +6,7 @@ import {
 } from "@/types/vocabulary";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
-
-export async function fetchAuthConfig(): Promise<{
-  supabase_url: string;
-  supabase_anon_key: string;
-}> {
-  const res = await fetch(`${API_BASE_URL}/auth/config`);
-  if (!res.ok) {
-    throw new Error(`Failed to fetch auth config: ${res.statusText}`);
-  }
-  return res.json();
-}
+  process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 
 export async function fetchVocabularies(
   accessToken: string,
@@ -25,36 +14,31 @@ export async function fetchVocabularies(
   status?: string,
   favorite?: boolean
 ): Promise<{ data: Vocabulary[]; total: number }> {
-  try {
-    const params = new URLSearchParams();
-    if (query) params.set("q", query);
-    if (status && status !== "all" && status !== "favorite") {
-      params.set("status", status);
-    }
-    if (favorite || status === "favorite") {
-      params.set("favorite", "true");
-    }
-
-    const res = await fetch(`${API_BASE_URL}/vocabularies?${params.toString()}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error(`API Error: ${res.statusText}`);
-    }
-
-    const json = await res.json();
-    return {
-      data: json.data || [],
-      total: json.meta?.total || (json.data ? json.data.length : 0),
-    };
-  } catch (err) {
-    console.warn("API Service fallback: Go Backend API unavailable or unconfigured.", err);
-    throw err;
+  const params = new URLSearchParams();
+  if (query) params.set("q", query);
+  if (status && status !== "all" && status !== "favorite") {
+    params.set("status", status);
   }
+  if (favorite || status === "favorite") {
+    params.set("favorite", "true");
+  }
+
+  const res = await fetch(`${API_BASE_URL}/vocabularies?${params.toString()}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`API Error: ${res.statusText}`);
+  }
+
+  const json = await res.json();
+  return {
+    data: json.data || [],
+    total: json.meta?.total || (json.data ? json.data.length : 0),
+  };
 }
 
 export async function createVocabulary(
