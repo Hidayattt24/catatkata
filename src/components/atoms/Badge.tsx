@@ -7,9 +7,9 @@ interface BadgeProps {
 
 export const Badge: React.FC<BadgeProps> = ({ status }) => {
   const styles: Record<LearningStatus, string> = {
-    learning: "bg-[#ffe8d4] text-[#ff9600] border-[#ffc38c]",
-    reviewing: "bg-[#fff4d4] text-[#d7a100] border-[#ffe38c]",
-    mastered: "bg-[#d7ffb8] text-[#58cc02] border-[#a5ed6e]",
+    learning: "bg-learning-bg text-learning-text border-learning-bdr",
+    reviewing: "bg-reviewing-bg text-reviewing-text border-reviewing-bdr",
+    mastered: "bg-mastered-bg text-mastered-text border-mastered-bdr",
   };
 
   const labels: Record<LearningStatus, string> = {

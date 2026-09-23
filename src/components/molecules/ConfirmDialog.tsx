@@ -32,12 +32,12 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
         }}
       >
         <div
-          className="relative w-full max-w-sm rounded-[20px] bg-white p-6 shadow-2xl border-2 border-[#e5e5e5]"
+          className="relative w-full max-w-sm rounded-[20px] bg-white p-6 shadow-2xl border-2 border-border"
           role="dialog"
           aria-modal="true"
         >
-          <h3 className="text-xl font-extrabold text-[#4b4b4b] mb-2 font-feather">{title}</h3>
-          <p className="text-sm text-[#777777] mb-6 leading-relaxed font-medium">{message}</p>
+          <h3 className="text-xl font-extrabold text-charcoal mb-2 font-feather">{title}</h3>
+          <p className="text-sm text-gray mb-6 leading-relaxed font-medium">{message}</p>
 
           <div className="flex gap-3 justify-end">
             <Button variant="secondary" onClick={onCancel} size="sm">

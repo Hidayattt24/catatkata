@@ -57,11 +57,11 @@ export const VocabularyDetail: React.FC<VocabularyDetailProps> = ({
           }}
         >
           <div
-            className="relative my-auto w-full max-w-lg rounded-[20px] bg-white shadow-2xl border-2 border-[#e5e5e5] overflow-hidden flex flex-col max-h-[85vh] sm:max-h-[90vh]"
+            className="relative my-auto w-full max-w-lg rounded-[20px] bg-white shadow-2xl border-2 border-border overflow-hidden flex flex-col max-h-[85vh] sm:max-h-[90vh]"
             role="dialog"
             aria-modal="true"
           >
-            <div className="flex h-14 items-center justify-between border-b-2 border-[#e5e5e5] px-6 bg-[#ffffff] shrink-0">
+            <div className="flex h-14 items-center justify-between border-b-2 border-border px-6 bg-white shrink-0">
               <div className="flex items-center gap-2">
                 <Tag pos={vocabulary.part_of_speech} />
                 <Badge status={vocabulary.status} />
@@ -69,7 +69,7 @@ export const VocabularyDetail: React.FC<VocabularyDetailProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-[10px] p-1.5 text-[#afafaf] hover:bg-[#f7f7f7] hover:text-[#4b4b4b] transition-colors"
+                className="rounded-[10px] p-1.5 text-gray-faded hover:bg-surface hover:text-charcoal transition-colors"
               >
                 <X size={20} weight="bold" />
               </button>
@@ -78,26 +78,26 @@ export const VocabularyDetail: React.FC<VocabularyDetailProps> = ({
             <div className="flex flex-1 flex-col justify-between overflow-y-auto p-6 gap-6">
               <div className="flex flex-col gap-5">
                 <div>
-                  <span className="text-xs uppercase font-extrabold text-[#afafaf] tracking-widest">
+                  <span className="text-xs uppercase font-extrabold text-gray-faded tracking-widest">
                     Indonesian
                   </span>
-                  <h2 className="text-2xl font-black text-[#4b4b4b] font-feather">
+                  <h2 className="text-2xl font-black text-charcoal font-feather">
                     {vocabulary.indonesian}
                   </h2>
                 </div>
 
                 <div>
-                  <span className="text-xs uppercase font-extrabold text-[#afafaf] tracking-widest">
+                  <span className="text-xs uppercase font-extrabold text-gray-faded tracking-widest">
                     English
                   </span>
-                  <h3 className="text-xl font-black text-[#58cc02] font-feather">
+                  <h3 className="text-xl font-black text-green font-feather">
                     {vocabulary.english}
                   </h3>
                 </div>
 
                 {vocabulary.example_sentence && (
-                  <div className="rounded-[16px] bg-[#d7ffb8]/30 p-4 border-2 border-[#a5ed6e]">
-                    <span className="text-xs font-bold uppercase text-[#58cc02] tracking-wider block mb-1">
+                  <div className="rounded-[16px] bg-green-tint/30 p-4 border-2 border-green-leaf">
+                    <span className="text-xs font-bold uppercase text-green tracking-wider block mb-1">
                       Example Sentence
                     </span>
                     <FormattedNote content={vocabulary.example_sentence} />
@@ -106,7 +106,7 @@ export const VocabularyDetail: React.FC<VocabularyDetailProps> = ({
 
                 {vocabulary.note && (
                   <div>
-                    <span className="text-xs font-bold uppercase text-[#afafaf] tracking-wider block mb-1">
+                    <span className="text-xs font-bold uppercase text-gray-faded tracking-wider block mb-1">
                       Personal Note
                     </span>
                     <FormattedNote content={vocabulary.note} />
@@ -114,7 +114,7 @@ export const VocabularyDetail: React.FC<VocabularyDetailProps> = ({
                 )}
 
                 <div>
-                  <span className="text-xs font-bold uppercase text-[#afafaf] tracking-wider block mb-2">
+                  <span className="text-xs font-bold uppercase text-gray-faded tracking-wider block mb-2">
                     Learning Status
                   </span>
                   <div className="grid grid-cols-3 gap-2">
@@ -125,8 +125,8 @@ export const VocabularyDetail: React.FC<VocabularyDetailProps> = ({
                         onClick={() => handleStatusClick(st.value)}
                         className={`h-9 rounded-[12px] text-xs font-bold uppercase tracking-wider border-2 border-b-4 transition-all ${
                           vocabulary.status === st.value
-                            ? "bg-[#58cc02] text-white border-[#58cc02] border-b-[#46a302]"
-                            : "bg-white text-[#4b4b4b] border-[#e5e5e5] border-b-[#e5e5e5] hover:bg-[#f7f7f7]"
+                            ? "bg-green text-white border-green border-b-green-shadow"
+                            : "bg-white text-charcoal border-border border-b-border hover:bg-surface"
                         }`}
                       >
                         {st.label}
@@ -136,7 +136,7 @@ export const VocabularyDetail: React.FC<VocabularyDetailProps> = ({
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3 pt-4 border-t-2 border-[#e5e5e5] mt-2 shrink-0">
+              <div className="flex flex-col gap-3 pt-4 border-t-2 border-border mt-2 shrink-0">
                 <div className="flex gap-2">
                   <Button
                     variant="secondary"
@@ -149,8 +149,8 @@ export const VocabularyDetail: React.FC<VocabularyDetailProps> = ({
                       weight={vocabulary.is_favorite ? "fill" : "bold"}
                       className={
                         vocabulary.is_favorite
-                          ? "text-[#ffc800]"
-                          : "text-[#afafaf]"
+                          ? "text-gold"
+                          : "text-gray-faded"
                       }
                     />
                     {vocabulary.is_favorite ? "Favorited" : "Favorite"}

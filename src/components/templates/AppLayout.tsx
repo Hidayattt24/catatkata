@@ -59,7 +59,6 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
 
   useGSAP(
     () => {
-      // Entrance animation for content items using @gsap/react useGSAP
       gsap.fromTo(
         ".smooth-content-inner",
         { opacity: 0, y: 15 },
@@ -70,7 +69,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   );
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-[#ffffff]">
+    <div ref={containerRef} className="relative min-h-screen bg-white">
       <AppHeader userEmail={userEmail} onLogout={onLogout} />
 
       <main className="smooth-content-inner w-full max-w-2xl mx-auto p-4 sm:p-6 pb-28">
@@ -82,7 +81,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         <button
           type="button"
           onClick={onAddClick}
-          className="fixed right-5 bottom-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#58cc02] text-white border-b-4 border-[#46a302] shadow-lg hover:bg-[#61df02] active:translate-y-[2px] active:shadow-none transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#58cc02]"
+          className="fixed right-5 bottom-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-green text-white border-b-4 border-green-shadow shadow-lg hover:bg-green-hover active:translate-y-[2px] active:shadow-none transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green"
           aria-label="Add vocabulary"
         >
           <Plus size={26} weight="bold" />

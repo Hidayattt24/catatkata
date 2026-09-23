@@ -17,7 +17,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-[#ffffff] text-[#4b4b4b] hover:bg-[#f7f7f7] border-2 border-[#e5e5e5] border-b-4 transition-all active:translate-y-[1px]"
+        className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-white text-charcoal hover:bg-surface border-2 border-border border-b-4 transition-all active:translate-y-[1px]"
         aria-label="User menu"
       >
         <User size={20} weight="bold" />
@@ -29,10 +29,10 @@ export const UserMenu: React.FC<UserMenuProps> = ({
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute right-0 top-12 z-50 w-56 rounded-[16px] bg-white p-2 shadow-xl border-2 border-[#e5e5e5]">
-            <div className="px-3 py-2 border-b border-[#e5e5e5] mb-1">
-              <p className="text-xs text-[#777777] font-bold uppercase tracking-wider">Signed in as</p>
-              <p className="text-sm font-bold text-[#4b4b4b] truncate">
+          <div className="absolute right-0 top-12 z-50 w-56 rounded-[16px] bg-white p-2 shadow-xl border-2 border-border">
+            <div className="px-3 py-2 border-b border-border mb-1">
+              <p className="text-xs text-gray font-bold uppercase tracking-wider">Signed in as</p>
+              <p className="text-sm font-bold text-charcoal truncate">
                 {userEmail}
               </p>
             </div>
@@ -42,7 +42,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({
                 setIsOpen(false);
                 onLogout();
               }}
-              className="flex w-full items-center gap-2 rounded-[10px] px-3 py-2 text-sm font-bold text-[#ff4b4b] hover:bg-[#fff0f0] transition-colors"
+              className="flex w-full items-center gap-2 rounded-[10px] px-3 py-2 text-sm font-bold text-red hover:bg-red-tint transition-colors"
             >
               <SignOut size={18} weight="bold" />
               Sign Out

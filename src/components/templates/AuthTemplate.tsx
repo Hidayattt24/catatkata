@@ -9,13 +9,13 @@ export const AuthTemplate: React.FC<AuthTemplateProps> = ({
   onLoginWithGoogle,
 }) => {
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-[#ffffff] p-4 text-center">
-      <div className="w-full max-w-sm rounded-[24px] bg-white p-8 shadow-xl border-2 border-[#e5e5e5] border-b-4">
+    <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-white p-4 text-center">
+      <div className="w-full max-w-sm rounded-[24px] bg-white p-8 shadow-xl border-2 border-border border-b-4">
         <div className="mb-6 flex flex-col items-center">
-          <h1 className="text-4xl font-black tracking-tight text-[#58cc02] font-feather mb-2">
+          <h1 className="text-4xl font-black tracking-tight text-green font-feather mb-2">
             CatatKata
           </h1>
-          <p className="text-base font-bold text-[#777777]">Your personal vocabulary notebook.</p>
+          <p className="text-base font-bold text-gray">Your personal vocabulary notebook.</p>
         </div>
 
         <Button

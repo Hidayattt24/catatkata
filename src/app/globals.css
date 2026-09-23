@@ -1,46 +1,151 @@
 @import "tailwindcss";
 
+/* ============================================================
+   DESIGN TOKENS — CatatKata (Duolingo Style Reference)
+   All colors defined here once. Zero hardcoded hex in components.
+   ============================================================ */
 :root {
-  --color-eager-green: #58cc02;
-  --color-storybook-green: #d7ffb8;
-  --color-spark-blue: #1cb0f6;
-  --color-fresh-leaf: #a5ed6e;
-  --color-night-ink: #000437;
-  --color-paper-white: #ffffff;
-  --color-charcoal: #4b4b4b;
-  --color-pencil-gray: #777777;
-  --color-faded-gray: #afafaf;
-  --color-border-gray: #e5e5e5;
+  /* --- Brand: Eager Green --- */
+  --c-green:         #58cc02;
+  --c-green-shadow:  #46a302;
+  --c-green-hover:   #61df02;
+  --c-green-tint:    #d7ffb8;
+  --c-green-leaf:    #a5ed6e;
+
+  /* --- Brand: Spark Blue --- */
+  --c-blue:          #1cb0f6;
+  --c-blue-shadow:   #0092d6;
+  --c-blue-deep:     #008cc9;
+  --c-blue-tint:     #ddf4ff;
+  --c-blue-border:   #b8e5fa;
+
+  /* --- Dark --- */
+  --c-dark:          #000437;
+  --c-dark-shadow:   #00021c;
+  --c-dark-hover:    #090d47;
+
+  /* --- Neutrals --- */
+  --c-white:         #ffffff;
+  --c-charcoal:      #4b4b4b;
+  --c-gray:          #777777;
+  --c-gray-faded:    #afafaf;
+  --c-border:        #e5e5e5;
+  --c-surface:       #f7f7f7;
+  --c-mute:          #f0f0f0;
+  --c-code:          #f0eeec;
+  --c-card-divider:  #f0f0f0;
+
+  /* --- Destructive: Cardinal Red --- */
+  --c-red:           #ff4b4b;
+  --c-red-shadow:    #ea2b2b;
+  --c-red-hover:     #ff5959;
+  --c-red-tint:      #fff0f0;
+
+  /* --- Star Gold --- */
+  --c-gold:          #ffc800;
+  --c-gold-tint:     #fff9e6;
+
+  /* --- Status Badges --- */
+  --c-learning-bg:   #ffe8d4;
+  --c-learning-text: #ff9600;
+  --c-learning-bdr:  #ffc38c;
+
+  --c-reviewing-bg:  #fff4d4;
+  --c-reviewing-text:#d7a100;
+  --c-reviewing-bdr: #ffe38c;
+
+  --c-mastered-bg:   #d7ffb8;
+  --c-mastered-text: #58cc02;
+  --c-mastered-bdr:  #a5ed6e;
+
+  /* --- Part of Speech Tags --- */
+  --c-pos-verb-bg:   #ddf4ff;
+  --c-pos-verb-bdr:  #1cb0f6;
+  --c-pos-verb-txt:  #008cc9;
+
+  --c-pos-noun-bg:   #ffe8d4;
+  --c-pos-noun-bdr:  #ff9600;
+  --c-pos-noun-txt:  #d67a00;
+
+  --c-pos-adj-bg:    #fce4ec;
+  --c-pos-adj-bdr:   #ff629e;
+  --c-pos-adj-txt:   #d62872;
+
+  --c-pos-adv-bg:    #f3e5f5;
+  --c-pos-adv-bdr:   #ce93d8;
+  --c-pos-adv-txt:   #8e24aa;
+
+  --c-pos-phr-bg:    #e8f5e9;
+  --c-pos-phr-bdr:   #81c784;
+  --c-pos-phr-txt:   #2e7d32;
+
+  --c-pos-idm-bg:    #fff8e1;
+  --c-pos-idm-bdr:   #ffd54f;
+  --c-pos-idm-txt:   #f57f17;
+
+  --c-pos-oth-bg:    #f5f5f5;
+  --c-pos-oth-bdr:   #bdbdbd;
+  --c-pos-oth-txt:   #616161;
 }
 
+/* ============================================================
+   TAILWIND v4 THEME MAPPING
+   ============================================================ */
 @theme inline {
-  --color-eager-green: var(--color-eager-green);
-  --color-storybook-green: var(--color-storybook-green);
-  --color-spark-blue: var(--color-spark-blue);
-  --color-fresh-leaf: var(--color-fresh-leaf);
-  --color-night-ink: var(--color-night-ink);
-  --color-paper-white: var(--color-paper-white);
-  --color-charcoal: var(--color-charcoal);
-  --color-pencil-gray: var(--color-pencil-gray);
-  --color-faded-gray: var(--color-faded-gray);
-  --color-border-gray: var(--color-border-gray);
+  --color-green:          var(--c-green);
+  --color-green-shadow:   var(--c-green-shadow);
+  --color-green-hover:    var(--c-green-hover);
+  --color-green-tint:     var(--c-green-tint);
+  --color-green-leaf:     var(--c-green-leaf);
+  --color-blue:           var(--c-blue);
+  --color-blue-shadow:    var(--c-blue-shadow);
+  --color-blue-deep:      var(--c-blue-deep);
+  --color-blue-tint:      var(--c-blue-tint);
+  --color-blue-border:    var(--c-blue-border);
+  --color-dark:           var(--c-dark);
+  --color-dark-shadow:    var(--c-dark-shadow);
+  --color-dark-hover:     var(--c-dark-hover);
+  --color-white:          var(--c-white);
+  --color-charcoal:       var(--c-charcoal);
+  --color-gray:           var(--c-gray);
+  --color-gray-faded:     var(--c-gray-faded);
+  --color-border:         var(--c-border);
+  --color-surface:        var(--c-surface);
+  --color-mute:           var(--c-mute);
+  --color-code:           var(--c-code);
+  --color-divider:        var(--c-card-divider);
+  --color-red:            var(--c-red);
+  --color-red-shadow:     var(--c-red-shadow);
+  --color-red-hover:      var(--c-red-hover);
+  --color-red-tint:       var(--c-red-tint);
+  --color-gold:           var(--c-gold);
+  --color-gold-tint:      var(--c-gold-tint);
+  --color-learning-bg:    var(--c-learning-bg);
+  --color-learning-text:  var(--c-learning-text);
+  --color-learning-bdr:   var(--c-learning-bdr);
+  --color-reviewing-bg:   var(--c-reviewing-bg);
+  --color-reviewing-text: var(--c-reviewing-text);
+  --color-reviewing-bdr:  var(--c-reviewing-bdr);
+  --color-mastered-bg:    var(--c-mastered-bg);
+  --color-mastered-text:  var(--c-mastered-text);
+  --color-mastered-bdr:   var(--c-mastered-bdr);
 
-  --font-sans: var(--font-duolingo-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    var(--font-duolingo-sans), ui-sans-serif, system-ui, sans-serif;
   --font-feather: var(--font-feather), ui-sans-serif, system-ui, sans-serif;
 }
 
+/* ============================================================
+   BASE
+   ============================================================ */
 body {
-  background-color: #ffffff;
-  color: #4b4b4b;
+  background-color: var(--c-white);
+  color: var(--c-charcoal);
   font-family: var(--font-sans);
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-/* Hide scrollbar for IE, Edge and Firefox */
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;

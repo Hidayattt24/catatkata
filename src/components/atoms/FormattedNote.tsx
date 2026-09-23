@@ -14,19 +14,19 @@ export const FormattedNote: React.FC<FormattedNoteProps> = ({
   const lines = content.split("\n");
 
   return (
-    <div className={`space-y-1.5 text-sm text-[#4b4b4b] leading-relaxed ${className}`}>
+    <div className={`space-y-1.5 text-sm text-charcoal leading-relaxed ${className}`}>
       {lines.map((line, idx) => {
         const isBullet = line.trim().startsWith("- ") || line.trim().startsWith("* ");
         const text = isBullet ? line.trim().substring(2) : line;
 
         const parts = text.split(/(`[^`]+`)/g);
 
-        const renderedContent = parts.map((part, pIdx) => {
+        const rendered = parts.map((part, pIdx) => {
           if (part.startsWith("`") && part.endsWith("`")) {
             return (
               <code
                 key={pIdx}
-                className="rounded bg-[#f0eeec] px-1.5 py-0.5 font-mono text-[0.85em] text-[#000000] border border-[#e5e5e5]"
+                className="rounded bg-code px-1.5 py-0.5 font-mono text-[0.85em] text-dark border border-border"
               >
                 {part.slice(1, -1)}
               </code>
@@ -38,13 +38,13 @@ export const FormattedNote: React.FC<FormattedNoteProps> = ({
         if (isBullet) {
           return (
             <div key={idx} className="flex items-start gap-2 pl-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#58cc02] mt-2 flex-shrink-0" />
-              <span>{renderedContent}</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-green mt-2 flex-shrink-0" />
+              <span>{rendered}</span>
             </div>
           );
         }
 
-        return <p key={idx}>{renderedContent}</p>;
+        return <p key={idx}>{rendered}</p>;
       })}
     </div>
   );

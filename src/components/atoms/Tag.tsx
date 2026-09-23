@@ -10,47 +10,47 @@ export const Tag: React.FC<TagProps> = ({ pos }) => {
 
   const posStyles: Record<string, { bg: string; border: string; text: string }> = {
     Verb: {
-      bg: "bg-[#ddf4ff]",
-      border: "border-[#1cb0f6]",
-      text: "text-[#008cc9]",
+      bg: "bg-[var(--c-pos-verb-bg)]",
+      border: "border-[var(--c-pos-verb-bdr)]",
+      text: "text-[var(--c-pos-verb-txt)]",
     },
     Noun: {
-      bg: "bg-[#ffe8d4]",
-      border: "border-[#ff9600]",
-      text: "text-[#d67a00]",
+      bg: "bg-[var(--c-pos-noun-bg)]",
+      border: "border-[var(--c-pos-noun-bdr)]",
+      text: "text-[var(--c-pos-noun-txt)]",
     },
     Adjective: {
-      bg: "bg-[#fce4ec]",
-      border: "border-[#ff629e]",
-      text: "text-[#d62872]",
+      bg: "bg-[var(--c-pos-adj-bg)]",
+      border: "border-[var(--c-pos-adj-bdr)]",
+      text: "text-[var(--c-pos-adj-txt)]",
     },
     Adverb: {
-      bg: "bg-[#f3e5f5]",
-      border: "border-[#ce93d8]",
-      text: "text-[#8e24aa]",
+      bg: "bg-[var(--c-pos-adv-bg)]",
+      border: "border-[var(--c-pos-adv-bdr)]",
+      text: "text-[var(--c-pos-adv-txt)]",
     },
     Phrase: {
-      bg: "bg-[#e8f5e9]",
-      border: "border-[#81c784]",
-      text: "text-[#2e7d32]",
+      bg: "bg-[var(--c-pos-phr-bg)]",
+      border: "border-[var(--c-pos-phr-bdr)]",
+      text: "text-[var(--c-pos-phr-txt)]",
     },
     Idiom: {
-      bg: "bg-[#fff8e1]",
-      border: "border-[#ffd54f]",
-      text: "text-[#f57f17]",
+      bg: "bg-[var(--c-pos-idm-bg)]",
+      border: "border-[var(--c-pos-idm-bdr)]",
+      text: "text-[var(--c-pos-idm-txt)]",
     },
     Other: {
-      bg: "bg-[#f5f5f5]",
-      border: "border-[#bdbdbd]",
-      text: "text-[#616161]",
+      bg: "bg-[var(--c-pos-oth-bg)]",
+      border: "border-[var(--c-pos-oth-bdr)]",
+      text: "text-[var(--c-pos-oth-txt)]",
     },
   };
 
-  const currentStyle = posStyles[pos] || posStyles.Other;
+  const current = posStyles[pos] || posStyles.Other;
 
   return (
     <span
-      className={`inline-flex items-center rounded-[12px] border-2 ${currentStyle.border} ${currentStyle.bg} ${currentStyle.text} px-2.5 py-0.5 text-xs font-black uppercase tracking-wider shadow-xs`}
+      className={`inline-flex items-center rounded-[12px] border-2 ${current.border} ${current.bg} ${current.text} px-2.5 py-0.5 text-xs font-black uppercase tracking-wider shadow-xs`}
     >
       {pos}
     </span>

@@ -111,18 +111,18 @@ export const VocabularyForm: React.FC<VocabularyFormProps> = ({
         }}
       >
         <div
-          className="relative my-auto w-full max-w-lg rounded-[20px] bg-white shadow-2xl border-2 border-[#e5e5e5] overflow-hidden flex flex-col max-h-[85vh] sm:max-h-[90vh]"
+          className="relative my-auto w-full max-w-lg rounded-[20px] bg-white shadow-2xl border-2 border-border overflow-hidden flex flex-col max-h-[85vh] sm:max-h-[90vh]"
           role="dialog"
           aria-modal="true"
         >
-          <div className="flex h-14 items-center justify-between border-b-2 border-[#e5e5e5] px-6 bg-[#ffffff] shrink-0">
-            <h2 className="text-lg font-black text-[#58cc02] font-feather">
+          <div className="flex h-14 items-center justify-between border-b-2 border-border px-6 bg-white shrink-0">
+            <h2 className="text-lg font-black text-green font-feather">
               {initialData ? "Edit Vocabulary" : "Add Vocabulary"}
             </h2>
             <button
               type="button"
               onClick={onClose}
-              className="rounded-[10px] p-1.5 text-[#afafaf] hover:bg-[#f7f7f7] hover:text-[#4b4b4b] transition-colors"
+              className="rounded-[10px] p-1.5 text-gray-faded hover:bg-surface hover:text-charcoal transition-colors"
             >
               <X size={20} weight="bold" />
             </button>
@@ -158,7 +158,7 @@ export const VocabularyForm: React.FC<VocabularyFormProps> = ({
                 onChange={(e) =>
                   setPartOfSpeech(e.target.value as PartOfSpeech | "")
                 }
-                className="h-11 w-full rounded-[12px] border-2 border-[#e5e5e5] bg-white px-3.5 py-2 text-base font-medium text-[#4b4b4b] focus:outline-none focus:border-[#58cc02] focus:ring-2 focus:ring-[#d7ffb8]"
+                className="h-11 w-full rounded-[12px] border-2 border-border bg-white px-3.5 py-2 text-base font-medium text-charcoal focus:outline-none focus:border-green focus:ring-2 focus:ring-green-tint"
               >
                 <option value="">Select Part of Speech (Optional)</option>
                 {PARTS_OF_SPEECH.map((pos) => (
@@ -179,8 +179,8 @@ export const VocabularyForm: React.FC<VocabularyFormProps> = ({
                       onClick={() => setStatus(st.value)}
                       className={`h-10 rounded-[12px] text-xs font-bold uppercase tracking-wider border-2 border-b-4 transition-all ${
                         status === st.value
-                          ? "bg-[#58cc02] text-white border-[#58cc02] border-b-[#46a302]"
-                          : "bg-white text-[#4b4b4b] border-[#e5e5e5] border-b-[#e5e5e5] hover:bg-[#f7f7f7]"
+                          ? "bg-green text-white border-green border-b-green-shadow"
+                          : "bg-white text-charcoal border-border border-b-border hover:bg-surface"
                       }`}
                     >
                       {st.label}
@@ -208,7 +208,7 @@ export const VocabularyForm: React.FC<VocabularyFormProps> = ({
               />
             </FormField>
 
-            <div className="flex gap-3 pt-4 border-t-2 border-[#e5e5e5] mt-2 justify-end shrink-0">
+            <div className="flex gap-3 pt-4 border-t-2 border-border mt-2 justify-end shrink-0">
               <Button
                 type="button"
                 variant="secondary"

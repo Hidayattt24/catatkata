@@ -19,13 +19,21 @@ export function getSupabaseAnonKey(): string {
   );
 }
 
-export function getAuthRedirectUrl(): string {
+/**
+ * Returns the absolute URL to the auth callback route.
+ * Uses window.location.origin on the client (runtime domain = Vercel production or localhost).
+ * Uses NEXT_PUBLIC_SITE_URL on the server side as fallback.
+ */
+export function getAuthCallbackUrl(): string {
   if (typeof window !== "undefined") {
-    return `${window.location.origin}/`;
+    return `${window.location.origin}/auth/callback`;
   }
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://catatkata-web.vercel.app/";
-  const formatted = siteUrl.startsWith("http") ? siteUrl : `https://${siteUrl}`;
-  return formatted.endsWith("/") ? formatted : `${formatted}/`;
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.VERCEL_URL ||
+    "https://catatkata-web.vercel.app";
+  const base = siteUrl.startsWith("http") ? siteUrl : `https://${siteUrl}`;
+  return `${base.replace(/\/$/, "")}/auth/callback`;
 }
 
 export const supabase = createClient(getSupabaseUrl(), getSupabaseAnonKey());
