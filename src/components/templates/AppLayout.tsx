@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { AppHeader } from "../organisms/AppHeader";
+import { BottomNav } from "../organisms/BottomNav";
 import { Plus } from "@phosphor-icons/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -13,6 +14,7 @@ interface AppLayoutProps {
   onLogout: () => void;
   onAddClick: () => void;
   isAddDisabled?: boolean;
+  addAriaLabel?: string;
   children: React.ReactNode;
 }
 
@@ -21,6 +23,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   onLogout,
   onAddClick,
   isAddDisabled = false,
+  addAriaLabel = "Add vocabulary",
   children,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -72,21 +75,31 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
     <div ref={containerRef} className="relative min-h-screen bg-white">
       <AppHeader userEmail={userEmail} onLogout={onLogout} />
 
-      <main className="smooth-content-inner w-full max-w-2xl mx-auto p-4 sm:p-6 pb-28">
+      <main
+        className="smooth-content-inner w-full max-w-2xl mx-auto p-4 sm:p-6"
+        style={{
+          paddingBottom:
+            "calc(6.5rem + env(safe-area-inset-bottom, 0px))",
+        }}
+      >
         {children}
       </main>
 
-      {/* Floating Action Button */}
       {!isAddDisabled && (
         <button
           type="button"
           onClick={onAddClick}
-          className="fixed right-5 bottom-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-green text-white border-b-4 border-green-shadow shadow-lg hover:bg-green-hover active:translate-y-[2px] active:shadow-none transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green"
-          aria-label="Add vocabulary"
+          className="fixed right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green text-white border-b-4 border-green-shadow shadow-lg hover:bg-green-hover active:translate-y-[2px] active:shadow-none transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green"
+          style={{
+            bottom: "calc(4.25rem + env(safe-area-inset-bottom, 0px))",
+          }}
+          aria-label={addAriaLabel}
         >
           <Plus size={26} weight="bold" />
         </button>
       )}
+
+      <BottomNav />
     </div>
   );
 };

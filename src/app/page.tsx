@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Vocabulary, CreateVocabularyInput } from "@/types/vocabulary";
 import { AuthTemplate } from "@/components/templates/AuthTemplate";
 import { AppLayout } from "@/components/templates/AppLayout";
@@ -12,14 +12,18 @@ import { VocabularyGrid } from "@/components/organisms/VocabularyGrid";
 import { VocabularyForm } from "@/components/organisms/VocabularyForm";
 import { VocabularyDetail } from "@/components/organisms/VocabularyDetail";
 import { ConfirmDialog } from "@/components/molecules/ConfirmDialog";
-import { supabase, getAuthCallbackUrl } from "@/lib/supabase";
 import { useVocabularies } from "@/hooks/useVocabularies";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Home() {
-  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const {
+    isLoadingAuth,
+    isAuthenticated,
+    userEmail,
+    accessToken,
+    handleLoginWithGoogle,
+    handleLogout,
+  } = useAuth();
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedVocab, setSelectedVocab] = useState<Vocabulary | null>(null);
@@ -39,57 +43,6 @@ export default function Home() {
     changeStatus,
     deleteVocabulary,
   } = useVocabularies(accessToken);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setIsAuthenticated(true);
-        setUserEmail(session.user.email || "learner@catatkata.app");
-        setAccessToken(session.access_token);
-      } else {
-        setIsAuthenticated(false);
-      }
-      setIsLoadingAuth(false);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        setIsAuthenticated(true);
-        setUserEmail(session.user.email || "learner@catatkata.app");
-        setAccessToken(session.access_token);
-      } else {
-        setIsAuthenticated(false);
-        setAccessToken(null);
-      }
-      setIsLoadingAuth(false);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleLoginWithGoogle = async () => {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: { redirectTo: getAuthCallbackUrl() },
-      });
-      if (error) {
-        setIsAuthenticated(true);
-        setUserEmail("learner@catatkata.app");
-      }
-    } catch {
-      setIsAuthenticated(true);
-      setUserEmail("learner@catatkata.app");
-    }
-  };
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setIsAuthenticated(false);
-    setAccessToken(null);
-  };
 
   const handleSave = async (data: CreateVocabularyInput) => {
     await createOrUpdate(data, editingVocab, selectedVocab, setSelectedVocab);

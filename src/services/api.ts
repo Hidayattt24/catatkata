@@ -4,6 +4,7 @@ import {
   UpdateVocabularyInput,
   LearningStatus,
 } from "@/types/vocabulary";
+import { Verb, CreateVerbInput, UpdateVerbInput } from "@/types/verb";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "/api/v1";
@@ -134,5 +135,89 @@ export async function deleteVocabulary(
 
   if (!res.ok) {
     throw new Error(`Failed to delete vocabulary: ${res.statusText}`);
+  }
+}
+
+export async function fetchVerbs(
+  accessToken: string,
+  query?: string
+): Promise<{ data: Verb[]; total: number }> {
+  const params = new URLSearchParams();
+  if (query) params.set("q", query);
+  params.set("limit", "100");
+
+  const res = await fetch(`${API_BASE_URL}/verbs?${params.toString()}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`API Error: ${res.statusText}`);
+  }
+
+  const json = await res.json();
+  return {
+    data: json.data || [],
+    total: json.meta?.total || (json.data ? json.data.length : 0),
+  };
+}
+
+export async function createVerb(
+  accessToken: string,
+  input: CreateVerbInput
+): Promise<Verb> {
+  const res = await fetch(`${API_BASE_URL}/verbs`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(input),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to create verb: ${res.statusText}`);
+  }
+
+  return res.json();
+}
+
+export async function updateVerb(
+  accessToken: string,
+  id: string,
+  input: UpdateVerbInput
+): Promise<Verb> {
+  const res = await fetch(`${API_BASE_URL}/verbs/${id}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(input),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to update verb: ${res.statusText}`);
+  }
+
+  return res.json();
+}
+
+export async function deleteVerb(
+  accessToken: string,
+  id: string
+): Promise<void> {
+  const res = await fetch(`${API_BASE_URL}/verbs/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to delete verb: ${res.statusText}`);
   }
 }
