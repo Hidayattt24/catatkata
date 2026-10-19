@@ -10,7 +10,6 @@ import { StreakTracker } from "@/components/molecules/StreakTracker";
 import { LockedInSection } from "@/components/organisms/LockedInSection";
 import { LockedInHistory } from "@/components/organisms/LockedInHistory";
 import { ConfirmDialog } from "@/components/molecules/ConfirmDialog";
-import { Toast } from "@/components/atoms/Toast";
 import { Fire, ClockCounterClockwise } from "@phosphor-icons/react";
 
 export default function LockedInPage() {
@@ -36,7 +35,6 @@ export default function LockedInPage() {
 
   const [activeTab, setActiveTab] = useState<"today" | "history">("today");
   const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const deletingTask =
     historyGroups.flatMap((g) => g.tasks).find((t) => t.id === deletingId) ||
@@ -46,7 +44,6 @@ export default function LockedInPage() {
     if (deletingId) {
       await deleteTask(deletingId);
       setDeletingId(null);
-      setToastMessage("Target berhasil dihapus");
     }
   };
 
@@ -134,13 +131,6 @@ export default function LockedInPage() {
         isDestructive
         onConfirm={handleConfirmDelete}
         onCancel={() => setDeletingId(null)}
-      />
-
-      {/* Floating Success Notification Toast */}
-      <Toast
-        message={toastMessage}
-        onClose={() => setToastMessage(null)}
-        duration={3000}
       />
     </AppLayout>
   );
