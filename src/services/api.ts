@@ -5,6 +5,7 @@ import {
   LearningStatus,
 } from "@/types/vocabulary";
 import { Verb, CreateVerbInput, UpdateVerbInput } from "@/types/verb";
+import { LockedInTask } from "@/types/lockedIn";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "/api/v1";
@@ -219,5 +220,122 @@ export async function deleteVerb(
 
   if (!res.ok) {
     throw new Error(`Failed to delete verb: ${res.statusText}`);
+  }
+}
+
+interface LockedInRecordRaw {
+  id: string;
+  text: string;
+  completed: boolean;
+  completed_at: string | null;
+  date: string;
+  duration_minutes: number | null;
+  created_at: string;
+}
+
+function mapLockedInRecord(r: LockedInRecordRaw): LockedInTask {
+  return {
+    id: r.id,
+    text: r.text,
+    completed: r.completed,
+    completedAt: r.completed_at || null,
+    date: r.date,
+    durationMinutes: r.duration_minutes ?? null,
+    createdAt: r.created_at,
+  };
+}
+
+export async function fetchLockedInTasks(
+  accessToken: string,
+  query?: { startDate?: string; endDate?: string; date?: string }
+): Promise<LockedInTask[]> {
+  const params = new URLSearchParams();
+  if (query?.startDate) params.set("startDate", query.startDate);
+  if (query?.endDate) params.set("endDate", query.endDate);
+  if (query?.date) params.set("date", query.date);
+  params.set("limit", "100");
+
+  const res = await fetch(`${API_BASE_URL}/locked-in?${params.toString()}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`API Error: ${res.statusText}`);
+  }
+
+  const json = await res.json();
+  const records = (json.data || []) as LockedInRecordRaw[];
+  return records.map(mapLockedInRecord);
+}
+
+export async function createLockedInTask(
+  accessToken: string,
+  input: { text: string; date?: string; durationMinutes?: number | null }
+): Promise<LockedInTask> {
+  const res = await fetch(`${API_BASE_URL}/locked-in`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      text: input.text,
+      date: input.date,
+      duration_minutes: input.durationMinutes ?? null,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to create locked-in task: ${res.statusText}`);
+  }
+
+  const raw = await res.json();
+  return mapLockedInRecord(raw);
+}
+
+export async function updateLockedInTask(
+  accessToken: string,
+  id: string,
+  input: { text?: string; completed?: boolean; durationMinutes?: number | null }
+): Promise<LockedInTask> {
+  const payload: Record<string, unknown> = {};
+  if (input.text !== undefined) payload.text = input.text;
+  if (input.completed !== undefined) payload.completed = input.completed;
+  if (input.durationMinutes !== undefined) payload.duration_minutes = input.durationMinutes;
+
+  const res = await fetch(`${API_BASE_URL}/locked-in/${id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to update locked-in task: ${res.statusText}`);
+  }
+
+  const raw = await res.json();
+  return mapLockedInRecord(raw);
+}
+
+export async function deleteLockedInTask(
+  accessToken: string,
+  id: string
+): Promise<void> {
+  const res = await fetch(`${API_BASE_URL}/locked-in/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to delete locked-in task: ${res.statusText}`);
   }
 }

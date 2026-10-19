@@ -2,12 +2,13 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import { BookOpen, ArrowsClockwise } from "@phosphor-icons/react";
+import { BookOpen, ArrowsClockwise, Fire } from "@phosphor-icons/react";
 import { NavItem } from "../molecules/NavItem";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Kata", icon: BookOpen },
+  { href: "/", label: "Word", icon: BookOpen },
   { href: "/verbs", label: "Verb", icon: ArrowsClockwise },
+  { href: "/locked-in", label: "Locked In", icon: Fire },
 ] as const;
 
 export const BottomNav: React.FC = () => {
